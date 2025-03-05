@@ -9,7 +9,16 @@ class AddressBookContact {
   _phoneNumber;
   _email;
 
-  constructor(firstName, lastName, address, city, state, zip, phoneNumber, email) {
+  constructor(
+    firstName,
+    lastName,
+    address,
+    city,
+    state,
+    zip,
+    phoneNumber,
+    email
+  ) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.address = address;
@@ -149,6 +158,15 @@ class AddressBookContact {
         Phone: ${this.phoneNumber}
         Email: ${this.email}`);
   }
+
+  // Method to edit contact information
+  editContactDetails(details) {
+    for (let key in details) {
+      if (this.hasOwnProperty(`_${key}`)) {
+        this[key] = details[key];
+      }
+    }
+  }
 }
 
 // New AddressBook class
@@ -164,6 +182,22 @@ class AddressBook {
       throw new Error(
         "Invalid contact. Must be an instance of AddressBookContact."
       );
+    }
+  }
+
+  findContactByName(firstName, lastName) {
+    return this.contacts.find(
+      (contact) =>
+        contact.firstName === firstName && contact.lastName === lastName
+    );
+  }
+
+  editContact(firstName, lastName, newDetails) {
+    const contact = this.findContactByName(firstName, lastName);
+    if (contact) {
+      contact.editContactDetails(newDetails);
+    } else {
+      throw new Error("Contact not found.");
     }
   }
 
@@ -205,6 +239,15 @@ try {
   addressBook.addContact(contact2);
 
   // Display all contacts in the address book
+  addressBook.displayAllContacts();
+
+  // Edit an existing contact
+  addressBook.editContact("John", "Doe", {
+    firstName: "Johnny",
+    phoneNumber: "9123456780",
+  });
+
+  console.log("After editing contact:");
   addressBook.displayAllContacts();
 } catch (error) {
   console.error(error.message);
