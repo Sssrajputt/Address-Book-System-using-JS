@@ -9,16 +9,7 @@ class AddressBookContact {
   _phoneNumber;
   _email;
 
-  constructor(
-    firstName,
-    lastName,
-    address,
-    city,
-    state,
-    zip,
-    phoneNumber,
-    email
-  ) {
+  constructor(firstName, lastName, address, city, state, zip, phoneNumber, email) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.address = address;
@@ -160,21 +151,61 @@ class AddressBookContact {
   }
 }
 
-// Example Usage
+// New AddressBook class
+class AddressBook {
+  constructor() {
+    this.contacts = [];
+  }
+
+  addContact(contact) {
+    if (contact instanceof AddressBookContact) {
+      this.contacts.push(contact);
+    } else {
+      throw new Error(
+        "Invalid contact. Must be an instance of AddressBookContact."
+      );
+    }
+  }
+
+  displayAllContacts() {
+    if (this.contacts.length === 0) {
+      console.log("No contacts in the address book.");
+    } else {
+      this.contacts.forEach((contact) => contact.displayContact());
+    }
+  }
+}
+
 try {
-  const contact = new AddressBookContact(
+  const addressBook = new AddressBook();
+
+  const contact1 = new AddressBookContact(
     "John",
     "Doe",
     "123 Main St",
     "Hometown",
-    "Bhopal",
-    "462023",
+    "San Francisco",
+    "461234",
     "9876543210",
     "john.doe@example.com"
   );
 
-  // Display the contact information
-  contact.displayContact();
+  const contact2 = new AddressBookContact(
+    "Jane",
+    "Smith",
+    "456 Oak St",
+    "AnotherTown",
+    "Los Angeles",
+    "461-789",
+    "9123456789",
+    "jane.smith@example.com"
+  );
+
+  addressBook.addContact(contact1);
+  addressBook.addContact(contact2);
+
+  // Display all contacts in the address book
+  addressBook.displayAllContacts();
 } catch (error) {
   console.error(error.message);
 }
