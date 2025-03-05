@@ -257,6 +257,14 @@ class AddressBook {
     }
   }
 
+  countByCity(city) {
+    return this.contacts.filter((contact) => contact.city === city).length;
+  }
+
+  countByState(state) {
+    return this.contacts.filter((contact) => contact.state === state).length;
+  }
+
   displayAllContacts() {
     if (this.contacts.length === 0) {
       console.log("No contacts in the address book.");
@@ -330,6 +338,14 @@ try {
   // Get the number of contacts in the address book
   const numberOfContacts = addressBook.getNumberOfContacts();
   console.log(`Number of contacts: ${numberOfContacts}`);
+
+  // Get the number of contacts by city
+  const countInHometown = addressBook.countByCity("Hometown");
+  console.log(`Number of contacts in Hometown: ${countInHometown}`);
+
+  // Get the number of contacts by state
+  const countInCalifornia = addressBook.countByState("San Francisco");
+  console.log(`Number of contacts in San Francisco: ${countInCalifornia}`);
 
   // Edit an existing contact
   addressBook.editContact("John", "Doe", {
