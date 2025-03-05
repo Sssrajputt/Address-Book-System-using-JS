@@ -214,6 +214,10 @@ class AddressBook {
     }
   }
 
+  getNumberOfContacts() {
+    return this.contacts.length;
+  }
+
   displayAllContacts() {
     if (this.contacts.length === 0) {
       console.log("No contacts in the address book.");
@@ -254,6 +258,10 @@ try {
   // Display all contacts in the address book
   addressBook.displayAllContacts();
 
+  // Get the number of contacts in the address book
+  const numberOfContacts = addressBook.getNumberOfContacts();
+  console.log(`Number of contacts: ${numberOfContacts}`);
+
   // Edit an existing contact
   addressBook.editContact("John", "Doe", {
     firstName: "Johnny",
@@ -268,6 +276,10 @@ try {
 
   console.log("After deleting contact:");
   addressBook.displayAllContacts();
+
+  // Get the number of contacts in the address book after deletion
+  const updatedNumberOfContacts = addressBook.getNumberOfContacts();
+  console.log(`Number of contacts: ${updatedNumberOfContacts}`);
 } catch (error) {
   console.error(error.message);
 }
