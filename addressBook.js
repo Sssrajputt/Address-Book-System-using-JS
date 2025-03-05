@@ -177,12 +177,24 @@ class AddressBook {
 
   addContact(contact) {
     if (contact instanceof AddressBookContact) {
+      if (this.isDuplicate(contact.firstName, contact.lastName)) {
+        throw new Error(
+          `Duplicate entry detected for ${contact.firstName} ${contact.lastName}.`
+        );
+      }
       this.contacts.push(contact);
     } else {
       throw new Error(
         "Invalid contact. Must be an instance of AddressBookContact."
       );
     }
+  }
+
+  isDuplicate(firstName, lastName) {
+    return this.contacts.some(
+      (contact) =>
+        contact.firstName === firstName && contact.lastName === lastName
+    );
   }
 
   findContactByName(firstName, lastName) {
@@ -252,8 +264,26 @@ try {
     "jane.smith@example.com"
   );
 
+  const contact3 = new AddressBookContact(
+    "John",
+    "Doe",
+    "789 Pine St",
+    "Hometown",
+    "San Francisco",
+    "461235",
+    "9876543211",
+    "john.doe@another.com"
+  );
+
   addressBook.addContact(contact1);
   addressBook.addContact(contact2);
+
+  // Attempt to add a duplicate contact
+  try {
+    addressBook.addContact(contact3);
+  } catch (error) {
+    console.error(error.message);
+  }
 
   // Display all contacts in the address book
   addressBook.displayAllContacts();
