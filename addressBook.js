@@ -19,14 +19,55 @@ class AddressBookContact {
     phoneNumber,
     email
   ) {
-    this._firstName = firstName;
-    this._lastName = lastName;
-    this._address = address;
-    this._city = city;
-    this._state = state;
-    this._zip = zip;
-    this._phoneNumber = phoneNumber;
-    this._email = email;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.address = address;
+    this.city = city;
+    this.state = state;
+    this.zip = zip;
+    this.phoneNumber = phoneNumber;
+    this.email = email;
+  }
+
+  // Validation methods
+  validateName(name) {
+    const nameRegex = /^[A-Z][a-zA-Z]{2,}$/;
+    if (!nameRegex.test(name)) {
+      throw new Error(
+        "Name must start with a capital letter and have a minimum of 3 characters."
+      );
+    }
+  }
+
+  validateAddressField(field, fieldName) {
+    if (field.length < 4) {
+      throw new Error(`${fieldName} must have a minimum of 4 characters.`);
+    }
+  }
+
+  validateZip(zip) {
+    const zipRegex = /^\d{3}-?\d{3}$/;
+    if (!zipRegex.test(zip)) {
+      throw new Error(
+        "Invalid zip code. It must be 6 digits with an optional hyphen in the middle."
+      );
+    }
+  }
+
+  validatePhoneNumber(phoneNumber) {
+    const phoneRegex = /^[6-9]\d{9}$/;
+    if (!phoneRegex.test(phoneNumber)) {
+      throw new Error(
+        "Invalid phone number. It must start with 6, 7, 8, or 9 and be 10 digits long."
+      );
+    }
+  }
+
+  validateEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(email)) {
+      throw new Error("Invalid email address.");
+    }
   }
 
   // Getter and Setter for firstName
@@ -35,6 +76,7 @@ class AddressBookContact {
   }
 
   set firstName(value) {
+    this.validateName(value);
     this._firstName = value;
   }
 
@@ -44,6 +86,7 @@ class AddressBookContact {
   }
 
   set lastName(value) {
+    this.validateName(value);
     this._lastName = value;
   }
 
@@ -53,6 +96,7 @@ class AddressBookContact {
   }
 
   set address(value) {
+    this.validateAddressField(value, "Address");
     this._address = value;
   }
 
@@ -62,6 +106,7 @@ class AddressBookContact {
   }
 
   set city(value) {
+    this.validateAddressField(value, "City");
     this._city = value;
   }
 
@@ -71,6 +116,7 @@ class AddressBookContact {
   }
 
   set state(value) {
+    this.validateAddressField(value, "State");
     this._state = value;
   }
 
@@ -80,6 +126,7 @@ class AddressBookContact {
   }
 
   set zip(value) {
+    this.validateZip(value);
     this._zip = value;
   }
 
@@ -89,6 +136,7 @@ class AddressBookContact {
   }
 
   set phoneNumber(value) {
+    this.validatePhoneNumber(value);
     this._phoneNumber = value;
   }
 
@@ -98,6 +146,7 @@ class AddressBookContact {
   }
 
   set email(value) {
+    this.validateEmail(value);
     this._email = value;
   }
 
@@ -112,16 +161,20 @@ class AddressBookContact {
 }
 
 // Example Usage
-const contact = new AddressBookContact(
-  "John",
-  "Doe",
-  "123 Main St",
-  "Hometown",
-  "TX",
-  "12345",
-  "123-456-7890",
-  "john.doe@example.com"
-);
+try {
+  const contact = new AddressBookContact(
+    "John",
+    "Doe",
+    "123 Main St",
+    "Hometown",
+    "Bhopal",
+    "462023",
+    "9876543210",
+    "john.doe@example.com"
+  );
 
-// Display the contact information
-contact.displayContact();
+  // Display the contact information
+  contact.displayContact();
+} catch (error) {
+  console.error(error.message);
+}
