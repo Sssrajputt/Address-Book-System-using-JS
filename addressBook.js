@@ -9,7 +9,16 @@ class AddressBookContact {
   _phoneNumber;
   _email;
 
-  constructor(firstName, lastName, address, city, state, zip, phoneNumber, email) {
+  constructor(
+    firstName,
+    lastName,
+    address,
+    city,
+    state,
+    zip,
+    phoneNumber,
+    email
+  ) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.address = address;
@@ -158,6 +167,11 @@ class AddressBookContact {
       }
     }
   }
+
+  // Override toString method
+  toString() {
+    return `Name: ${this.firstName} ${this.lastName}, Address: ${this.address}, ${this.city}, ${this.state}, ${this.zip}, Phone: ${this.phoneNumber}, Email: ${this.email}`;
+  }
 }
 
 // New AddressBook class
@@ -263,6 +277,18 @@ class AddressBook {
 
   countByState(state) {
     return this.contacts.filter((contact) => contact.state === state).length;
+  }
+
+  sortContactsByName() {
+    this.contacts.sort((a, b) => {
+      const nameA = `${a.firstName} ${a.lastName}`.toLowerCase();
+      const nameB = `${b.firstName} ${b.lastName}`.toLowerCase();
+      if (nameA < nameB) return -1;
+      if (nameA > nameB) return 1;
+      return 0;
+    });
+    console.log("Contacts sorted by name:");
+    this.displayAllContacts();
   }
 
   displayAllContacts() {
