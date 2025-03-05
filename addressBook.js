@@ -291,6 +291,42 @@ class AddressBook {
     this.displayAllContacts();
   }
 
+  sortByCity() {
+    this.contacts.sort((a, b) => {
+      const cityA = a.city.toLowerCase();
+      const cityB = b.city.toLowerCase();
+      if (cityA < cityB) return -1;
+      if (cityA > cityB) return 1;
+      return 0;
+    });
+    console.log("Contacts sorted by city:");
+    this.displayAllContacts();
+  }
+
+  sortByState() {
+    this.contacts.sort((a, b) => {
+      const stateA = a.state.toLowerCase();
+      const stateB = b.state.toLowerCase();
+      if (stateA < stateB) return -1;
+      if (stateA > stateB) return 1;
+      return 0;
+    });
+    console.log("Contacts sorted by state:");
+    this.displayAllContacts();
+  }
+
+  sortByZip() {
+    this.contacts.sort((a, b) => {
+      const zipA = a.zip.toLowerCase();
+      const zipB = b.zip.toLowerCase();
+      if (zipA < zipB) return -1;
+      if (zipA > zipB) return 1;
+      return 0;
+    });
+    console.log("Contacts sorted by zip:");
+    this.displayAllContacts();
+  }
+
   displayAllContacts() {
     if (this.contacts.length === 0) {
       console.log("No contacts in the address book.");
@@ -372,6 +408,18 @@ try {
   // Get the number of contacts by state
   const countInCalifornia = addressBook.countByState("San Francisco");
   console.log(`Number of contacts in San Francisco: ${countInCalifornia}`);
+
+  // Sort contacts by name
+  addressBook.sortContactsByName();
+
+  // Sort contacts by city
+  addressBook.sortByCity();
+
+  // Sort contacts by state
+  addressBook.sortByState();
+
+  // Sort contacts by zip
+  addressBook.sortByZip();
 
   // Edit an existing contact
   addressBook.editContact("John", "Doe", {
