@@ -201,6 +201,19 @@ class AddressBook {
     }
   }
 
+  deleteContact(firstName, lastName) {
+    const index = this.contacts.findIndex(
+      (contact) =>
+        contact.firstName === firstName && contact.lastName === lastName
+    );
+    if (index !== -1) {
+      this.contacts.splice(index, 1);
+      console.log(`Contact ${firstName} ${lastName} has been deleted.`);
+    } else {
+      throw new Error("Contact not found.");
+    }
+  }
+
   displayAllContacts() {
     if (this.contacts.length === 0) {
       console.log("No contacts in the address book.");
@@ -248,6 +261,12 @@ try {
   });
 
   console.log("After editing contact:");
+  addressBook.displayAllContacts();
+
+  // Delete an existing contact
+  addressBook.deleteContact("Jane", "Smith");
+
+  console.log("After deleting contact:");
   addressBook.displayAllContacts();
 } catch (error) {
   console.error(error.message);
