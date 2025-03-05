@@ -230,6 +230,14 @@ class AddressBook {
     return this.contacts.length;
   }
 
+  searchByCity(city) {
+    return this.contacts.filter((contact) => contact.city === city);
+  }
+
+  searchByState(state) {
+    return this.contacts.filter((contact) => contact.state === state);
+  }
+
   displayAllContacts() {
     if (this.contacts.length === 0) {
       console.log("No contacts in the address book.");
@@ -265,28 +273,32 @@ try {
   );
 
   const contact3 = new AddressBookContact(
-    "John",
-    "Doe",
+    "Alice",
+    "Brown",
     "789 Pine St",
     "Hometown",
     "San Francisco",
     "461235",
     "9876543211",
-    "john.doe@another.com"
+    "alice.brown@example.com"
   );
 
   addressBook.addContact(contact1);
   addressBook.addContact(contact2);
-
-  // Attempt to add a duplicate contact
-  try {
-    addressBook.addContact(contact3);
-  } catch (error) {
-    console.error(error.message);
-  }
+  addressBook.addContact(contact3);
 
   // Display all contacts in the address book
   addressBook.displayAllContacts();
+
+  // Search for contacts by city
+  const contactsInHometown = addressBook.searchByCity("Hometown");
+  console.log("Contacts in Hometown:");
+  contactsInHometown.forEach((contact) => contact.displayContact());
+
+  // Search for contacts by state
+  const contactsInCalifornia = addressBook.searchByState("San Francisco");
+  console.log("Contacts in San Francisco:");
+  contactsInCalifornia.forEach((contact) => contact.displayContact());
 
   // Get the number of contacts in the address book
   const numberOfContacts = addressBook.getNumberOfContacts();
