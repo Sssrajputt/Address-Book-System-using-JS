@@ -9,16 +9,7 @@ class AddressBookContact {
   _phoneNumber;
   _email;
 
-  constructor(
-    firstName,
-    lastName,
-    address,
-    city,
-    state,
-    zip,
-    phoneNumber,
-    email
-  ) {
+  constructor(firstName, lastName, address, city, state, zip, phoneNumber, email) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.address = address;
@@ -238,6 +229,34 @@ class AddressBook {
     return this.contacts.filter((contact) => contact.state === state);
   }
 
+  viewPersonsByCity(city) {
+    const contactsInCity = this.contacts.filter(
+      (contact) => contact.city === city
+    );
+    if (contactsInCity.length === 0) {
+      console.log(`No contacts found in city: ${city}`);
+    } else {
+      console.log(`Contacts in ${city}:`);
+      contactsInCity.forEach((contact) =>
+        console.log(`${contact.firstName} ${contact.lastName}`)
+      );
+    }
+  }
+
+  viewPersonsByState(state) {
+    const contactsInState = this.contacts.filter(
+      (contact) => contact.state === state
+    );
+    if (contactsInState.length === 0) {
+      console.log(`No contacts found in state: ${state}`);
+    } else {
+      console.log(`Contacts in ${state}:`);
+      contactsInState.forEach((contact) =>
+        console.log(`${contact.firstName} ${contact.lastName}`)
+      );
+    }
+  }
+
   displayAllContacts() {
     if (this.contacts.length === 0) {
       console.log("No contacts in the address book.");
@@ -299,6 +318,14 @@ try {
   const contactsInCalifornia = addressBook.searchByState("San Francisco");
   console.log("Contacts in San Francisco:");
   contactsInCalifornia.forEach((contact) => contact.displayContact());
+
+  // View persons by city
+  console.log("View persons by City (Hometown):");
+  addressBook.viewPersonsByCity("Hometown");
+
+  // View persons by state
+  console.log("View persons by State (San Francisco):");
+  addressBook.viewPersonsByState("San Francisco");
 
   // Get the number of contacts in the address book
   const numberOfContacts = addressBook.getNumberOfContacts();
